@@ -1,29 +1,43 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'NodeJS 18'  // Assuming you have configured NodeJS 18 in Jenkins
-    }
-
     stages {
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'  // Install npm dependencies
+        stage('Install Dependencies')
+      {
+            steps 
+        {
+                sh 'npm install'
             }
         }
+        
         stage('Build') {
             steps {
-                sh 'ng build --configuration production'  // Build the Angular app
+                sh 'ng build --configuration production'
             }
         }
+        stage('Deploy') 
+        {
+            steps
+            {
+                script
+                {
+                
+            
+                    def remoteHost = 'moaznaeem@4.161.47.69'
+                    def remoteDir = "/home/moaznaeem/dep"
+                    sh "scp -r dist/Angular-HelloWorld/* ${remoteHost}:${remoteDir}"
+                }
+            }
+        }
+        
     }
 
     post {
         success {
-            echo 'Build completed successfully.'
+            echo 'Deployment completed successfully.'
         }
         failure {
-            echo 'Build failed. Check the logs.'
+            echo 'Deployment failed. Check the logs.'
         }
     }
 }
