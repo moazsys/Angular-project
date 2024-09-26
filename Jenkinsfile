@@ -21,8 +21,7 @@ pipeline {
           {
                 
                 sshagent(['da86818e-3969-4a3a-8f59-94c1241d6bc6']) 
-              {
-                    sh 'scp -r dist/angular-hello-world/* moaz@4.216.187.218:/home/moaz/dep'
+              {sh ' scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null dist/angular-hello-world/* moaz@4.216.187.218:/home/moaz/dep'
               }
           }
       }
