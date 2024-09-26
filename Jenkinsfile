@@ -12,7 +12,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'sudo ng build --configuration production'
+                sh 'ng build --configuration production'
             }
         }
         stage('Deploy') 
