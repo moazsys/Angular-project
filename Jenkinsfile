@@ -15,20 +15,16 @@ pipeline {
                 sh 'ng build --configuration production'
             }
         }
-        stage('Deploy') 
+       stage('Deploy')
+      {
+            steps 
         {
-            steps
-            {
-                script
-                {
-                
-            
-                    def remoteHost = 'moaz@4.216.187.218'
-                    def remoteDir = "/home/moaz/dep"
-                    sh "scp -r dist/Angular-HelloWorld/* ${remoteHost}:${remoteDir}"
+                // Ensure you have the correct credential ID here
+                sshagent(['da86818e-3969-4a3a-8f59-94c1241d6bc6']) 
+          {
+                    sh 'scp -o StrictHostKeyChecking=no -r dist/angular-hello-world/* moaz@4.216.187.218:/home/moaz/dep'
                 }
             }
-        }
         
     }
 
