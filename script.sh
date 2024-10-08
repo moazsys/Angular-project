@@ -1,7 +1,7 @@
 NEXUS_URL="http://4.216.187.218:8081"
 REPOSITORY="angular"
 VERSION="1.0.0"
-FILE_PATH="nexus.tar.gz" 
+FILE_PATH="app.tar" 
 USERNAME="admin"
 PASSWORD="Moaz@2003"
 
