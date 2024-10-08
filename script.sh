@@ -1,15 +1,42 @@
-NEXUS_URL="http://4.216.187.218:8081"
-REPOSITORY="angular"
-VERSION="1.0.0"
-FILE_PATH="app.tar" 
+
+NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
+APP_DIR="/var/jenkins_home/workspace/"
+APP_NAME="my-angular-app"  # Change this to your desired app name
+VERSION="1.1.0"           # Version of your package
 
-curl -v -u "$USERNAME:$PASSWORD" --upload-file "$FILE_PATH" \
-    "$NEXUS_URL/repository/$REPOSITORY/$VERSION/$FILE_PATH"
+# Create .npmrc file for authentication
+echo "//4.216.187.218:8081/repository/angular/:username=${USERNAME}" > ${APP_DIR}/.npmrc
+echo "//4.216.187.218:8081/repository/angular/:_password=$(echo -n ${PASSWORD} | base64)" >> ${APP_DIR}/.npmrc
 
-if [ $? -eq 0 ]; then
-    echo "File published successfully to Nexus!"
+# Create a package.json file
+cat <<EOF > ${APP_DIR}/package.json
+{
+  "name": "${APP_NAME}",
+  "version": "${VERSION}",
+  "main": "app.py",
+  "files": [
+    "app.py"
+  ],
+  "scripts": {
+    "start": "python app.py"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+EOF
+
+# Change to the application directory
+cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
+
+# Publish to Nexus
+npm publish --registry $NEXUS_URL
+
+# Check for success
+if [[ $? -eq 0 ]]; then
+    echo "Application published successfully to Nexus!"
 else
-    echo "Failed to publish file to Nexus."
+    echo "Failed to publish application to Nexus."
 fi
