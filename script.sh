@@ -2,7 +2,7 @@
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/publish/"
+APP_DIR="/var/jenkins_home/workspace/nexus/"
 APP_NAME="my-python-app"  
 VERSION="1.1.0"           
 
@@ -15,12 +15,12 @@ cat <<EOF > ${APP_DIR}/package.json
 {
   "name": "${APP_NAME}",
   "version": "${VERSION}",
-  "main": "publish.tar",
+  "main": "app.tar",
   "files": [
-    "publish.tar"
+    "app.tar"
   ],
   "scripts": {
-    "start": "publish.tar"
+    "start": "app.tar"
   },
   "engines": {
     "node": ">=14.0.0"
