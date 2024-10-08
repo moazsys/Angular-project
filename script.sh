@@ -1,6 +1,6 @@
 
 # Variables
-NEXUS_URL="http://4.216.187.218:8081"  # Corrected URL format
+NEXUS_URL="http://4.216.187.218:8081/repository/angular/"  # Corrected URL format
 REPOSITORY="angular"
 VERSION="1.0.0"
 FILE_PATH="/var/jenkins_home/workspace/publish/publish.zip"           # Added leading '/'
