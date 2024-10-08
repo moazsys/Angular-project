@@ -2,7 +2,7 @@
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/publish/"
+APP_DIR="/var/jenkins_home/workspace/jenkins_nexus/"
 APP_NAME="my-angular-app"  
 VERSION="1.1.0"           
 
