@@ -2,7 +2,7 @@
 NEXUS_URL="http://4.216.187.218:8081"
 REPOSITORY="angular"
 VERSION="1.0.0"
-FILE_PATH="publish.zip" # Ensure this matches your file name
+FILE_PATH="app.tar" # Ensure this matches your file name
 USERNAME="admin"
 PASSWORD="Moaz@2003"
 
