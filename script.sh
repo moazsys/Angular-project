@@ -2,9 +2,9 @@
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/nexus/"
-APP_NAME="my-python-app"  
-VERSION="1.2.0"           
+APP_DIR="/var/jenkins_home/workspace/"
+APP_NAME="my-python-app"  # Change this to your desired app name
+VERSION="1.1.4"           # Version of your package
 
 # Create .npmrc file for authentication
 echo "//4.216.187.218:8081/repository/angular/:username=${USERNAME}" > ${APP_DIR}/.npmrc
@@ -15,12 +15,12 @@ cat <<EOF > ${APP_DIR}/package.json
 {
   "name": "${APP_NAME}",
   "version": "${VERSION}",
-  "main": "app.tar",
+  "main": "app.py",
   "files": [
-    "app.tar"
+    "app.py"
   ],
   "scripts": {
-    "start": "app.tar"
+    "start": "python app.py"
   },
   "engines": {
     "node": ">=14.0.0"
