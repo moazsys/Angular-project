@@ -4,7 +4,7 @@ PASSWORD="Moaz@2003"
 APP_DIR="/var/jenkins_home/workspace/nexus11"
 ZIP_FILE="angular.zip" 
 APP_NAME="Angular"       
-VERSION="1.1.0"  # Update this as needed
+VERSION="1.2.0"  # Update this as needed
 
 cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
 
@@ -49,18 +49,4 @@ else
     exit 1
 fi
 
-# Fetch existing versions
-echo "Fetching existing versions for ${APP_NAME}..."
-response=$(curl -s -u "${USERNAME}:${PASSWORD}" "${NEXUS_URL}")
 
-# Print the raw response for debugging
-echo "Response from Nexus:"
-echo "${response}"
-
-# Check if the response is valid JSON before parsing
-if echo "${response}" | jq . >/dev/null 2>&1; then
-    echo "${response}" | jq -r '.items[].version' | sort -V
-else
-    echo "Failed to parse response as JSON."
-    exit 1
-fi
