@@ -3,7 +3,7 @@
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/artifacts"
+APP_DIR="$(pwd)"
 ZIP_FILE="angular.zip" 
 APP_NAME="Angular"       
 
