@@ -1,10 +1,10 @@
-NEXUS_URL="http://4.216.187.218:8081/service/rest/v1/components?repository=angular"
+NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
 APP_DIR="/var/jenkins_home/workspace/nexus11"
 ZIP_FILE="angular.zip" 
 APP_NAME="Angular"       
-VERSION="1.1.0"  # Update this to the actual version
+VERSION="1.1.0"  # Update this as needed
 
 cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
 
@@ -14,6 +14,11 @@ zip -r "${ZIP_FILE}" ./* || { echo "Failed to create ZIP file"; exit 1; }
 # Configure npm to use Nexus
 echo "//4.216.187.218:8081/repository/angular/:username=${USERNAME}" > ${APP_DIR}/.npmrc
 echo "//4.216.187.218:8081/repository/angular/:_password=$(echo -n ${PASSWORD} | base64)" >> ${APP_DIR}/.npmrc
+
+# Explicitly log in to Nexus
+npm login --registry=$NEXUS_URL --scope=@your-scope --always-auth
+# You can also try without --scope if you don't need it
+# The credentials will be pulled from the .npmrc file
 
 # Create package.json
 cat <<EOF > ${APP_DIR}/package.json
