@@ -51,10 +51,17 @@ else
     exit 1
 fi
 
+
 # Fetch existing versions from Nexus
 response=$(curl -s -u ${USERNAME}:${PASSWORD} "${NEXUS_URL}service/rest/v1/search?repository=angular&name=${APP_NAME}")
 
-# Parse the JSON response to extract versions
-existing_versions=$(echo "${response}" | jq -r '.items[].version' | sort -r)
-
-echo "Existing versions: ${existing_versions}"
+# Check if the response is valid JSON
+if echo "${response}" | jq . >/dev/null 2>&1; then
+    # Parse the JSON response to extract versions
+    existing_versions=$(echo "${response}" | jq -r '.items[].version' | sort -r)
+    echo "Existing versions: ${existing_versions}"
+else
+    echo "Failed to fetch existing versions: Invalid response from Nexus"
+    echo "Response: ${response}"
+    exit 1
+fi
