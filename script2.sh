@@ -1,3 +1,5 @@
+#!/bin/bash
+
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
@@ -49,4 +51,10 @@ else
     exit 1
 fi
 
+# Fetch existing versions from Nexus
+response=$(curl -s -u ${USERNAME}:${PASSWORD} "${NEXUS_URL}service/rest/v1/search?repository=angular&name=${APP_NAME}")
 
+# Parse the JSON response to extract versions
+existing_versions=$(echo "${response}" | jq -r '.items[].version' | sort -r)
+
+echo "Existing versions: ${existing_versions}"
