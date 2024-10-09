@@ -53,8 +53,16 @@ fi
 # Fetch and display existing versions
 echo "Fetching existing versions for ${APP_NAME}..."
 response=$(curl -s -u "${USERNAME}:${PASSWORD}" "${NEXUS_URL}?repository=angular")
-if [ $? -eq 0 ]; then
+
+# Print the raw response for debugging
+echo "Response from Nexus:"
+echo "${response}"
+
+# Check if the response is valid JSON before parsing
+if echo "${response}" | jq . >/dev/null 2>&1; then
     echo "${response}" | jq -r '.items[].version' | sort -V
 else
-    echo "Failed to fetch existing versions."
+    echo "Failed to parse response as JSON."
+    exit 1
 fi
+
