@@ -3,7 +3,7 @@
 NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/nexus11"
+APP_DIR="/var/jenkins_home/workspace/artifacts"
 ZIP_FILE="angular.zip" 
 APP_NAME="Angular"       
 
@@ -13,9 +13,6 @@ zip -r "${ZIP_FILE}" ./* || { echo "Failed to create ZIP file"; exit 1; }
 
 echo "//4.216.187.218:8081/repository/angular/:username=${USERNAME}" > ${APP_DIR}/.npmrc
 echo "//4.216.187.218:8081/repository/angular/:_password=$(echo -n ${PASSWORD} | base64)" >> ${APP_DIR}/.npmrc
-
-npm login --registry=$NEXUS_URL --scope=@your-scope --always-auth
-
 
 
 cat <<EOF > ${APP_DIR}/package.json
@@ -35,10 +32,8 @@ cat <<EOF > ${APP_DIR}/package.json
 }
 EOF
 
-# Publish to Nexus
 npm publish --registry $NEXUS_URL
 
-# Check for success
 if [[ $? -eq 0 ]]; then
     echo "Application published successfully to Nexus!"
 else
