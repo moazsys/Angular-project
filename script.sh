@@ -1,10 +1,18 @@
+#!/bin/bash
 
-NEXUS_URL="http://4.216.187.218:8081/repository/angular/"
+NEXUS_URL="http://4.216.187.218:8081/service/rest/v1/components"
 USERNAME="admin"
 PASSWORD="Moaz@2003"
-APP_DIR="/var/jenkins_home/workspace/nexus"
-APP_NAME="my-python-app"  # Change this to your desired app name
-VERSION="1.1.6"           # Version of your package
+APP_DIR="/var/jenkins_home/workspace/nexus11"
+ZIP_FILE="angular.zip" 
+APP_NAME="Angular"       
+VERSION="1.1.0"         
+
+# Change to the application directory
+cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
+
+# Zip the application files
+zip -r "${ZIP_FILE}" ./*
 
 # Create .npmrc file for authentication
 echo "//4.216.187.218:8081/repository/angular/:username=${USERNAME}" > ${APP_DIR}/.npmrc
@@ -15,21 +23,18 @@ cat <<EOF > ${APP_DIR}/package.json
 {
   "name": "${APP_NAME}",
   "version": "${VERSION}",
-  "main": "app.py",
+  "main": "${ZIP_FILE}",
   "files": [
-    "app.py"
+    "${ZIP_FILE}"
   ],
   "scripts": {
-    "start": "python app.py"
+    "start": "unzip ${ZIP_FILE}"
   },
   "engines": {
     "node": ">=14.0.0"
   }
 }
 EOF
-
-# Change to the application directory
-cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
 
 # Publish to Nexus
 npm publish --registry $NEXUS_URL
@@ -39,4 +44,14 @@ if [[ $? -eq 0 ]]; then
     echo "Application published successfully to Nexus!"
 else
     echo "Failed to publish application to Nexus."
+    exit 1
+fi
+
+# Fetch and display existing versions
+echo "Fetching existing versions for ${APP_NAME}..."
+response=$(curl -s -u "${USERNAME}:${PASSWORD}" "${NEXUS_URL}?repository=angular")
+if [ $? -eq 0 ]; then
+    echo "${response}" | jq -r '.items[].version' | sort -V
+else
+    echo "Failed to fetch existing versions."
 fi
