@@ -53,7 +53,9 @@ fi
 
 
 # Fetch existing versions from Nexus
-response=$(curl -s -u ${USERNAME}:${PASSWORD} "${NEXUS_URL}service/rest/v1/search?repository=angular&name=${APP_NAME}")
+version_check_url="${NEXUS_URL}service/rest/v1/search?repository=angular&name=${APP_NAME}"
+echo "Fetching existing versions from: ${version_check_url}"
+response=$(curl -s -u ${USERNAME}:${PASSWORD} "${version_check_url}")
 
 # Check if the response is valid JSON
 if echo "${response}" | jq . >/dev/null 2>&1; then
@@ -64,3 +66,4 @@ else
     echo "Response: ${response}"
     exit 1
 fi
+i
