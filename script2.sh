@@ -57,7 +57,6 @@ response=$(curl -s -u ${USERNAME}:${PASSWORD} "${NEXUS_URL}service/rest/v1/searc
 
 # Check if the response is valid JSON
 if echo "${response}" | jq . >/dev/null 2>&1; then
-    # Parse the JSON response to extract versions
     existing_versions=$(echo "${response}" | jq -r '.items[].version' | sort -r)
     echo "Existing versions: ${existing_versions}"
 else
