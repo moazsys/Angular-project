@@ -6,7 +6,6 @@ PASSWORD="Moaz@2003"
 APP_DIR="/var/jenkins_home/workspace/nexus11"
 ZIP_FILE="angular.zip" 
 APP_NAME="Angular"       
-VERSION="1.2.0"  
 
 cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
 
