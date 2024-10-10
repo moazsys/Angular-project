@@ -5,7 +5,7 @@ USERNAME="admin"
 PASSWORD="Moaz@2003"
 APP_DIR="$(pwd)"
 ZIP_FILE="angular.zip" 
-APP_NAME="Angular"       
+APP_NAME="Angular-Application"       
 
 cd "${APP_DIR}" || { echo "Application directory not found"; exit 1; }
 
