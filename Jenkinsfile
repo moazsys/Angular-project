@@ -83,7 +83,7 @@ pipeline {
                 script {
                     def userInput = input(
                         id: 'UserInput',
-                        message: 'Do you want to proceed with the version ${env.SELECTED_VERSION} or specify another?',
+                        message: 'Do you want to proceed with the latest version or specify another?',
                         parameters: [
                             [$class: 'ChoiceParameterDefinition', 
                              name: 'Select Version', 
